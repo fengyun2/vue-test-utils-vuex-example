@@ -20,17 +20,19 @@ describe('Actions.vue', () => {
       inputValue: null
     }; */
     state = appModule.state
-    actions = {
+    /* actions = {
       actionClick: jest.fn(),
       actionInput: jest.fn()
-    }
+    } */
+    actions = appModule.actions
     store = new Vuex.Store({
       modules: {
         app: {
           // state: appModule.state,
           state,
           mutations: appModule.mutations,
-          actions: appModule.actions,
+          // actions: appModule.actions,
+          actions,
           getters: appModule.getters
         }
       }
@@ -42,6 +44,7 @@ describe('Actions.vue', () => {
     input.element.value = 'input';
     input.trigger('input')
     // expect(actions.actionInput).toHaveBeenCalled();
+    wrapper.destroy()
   })
 
   it('在输入值等于 not input时，不会调用 action “actionInput”', () => {
@@ -49,7 +52,9 @@ describe('Actions.vue', () => {
     const input = wrapper.find('input')
     input.element.value = 'not input';
     input.trigger('input')
+
     // expect(actions.actionInput).not.toHaveBeenCalled();
+    wrapper.destroy()
   })
   it('在点击按钮时调用 action “actionClick”', () => {
     const wrapper = shallowMount(Actions, { store, localVue })
@@ -60,7 +65,8 @@ describe('Actions.vue', () => {
     console.log('actionClick: ', vm.actionClick)
     console.log('actionInput: ', vm.actionInput) */
 
-    // expect(actions.actionClick).toHaveBeenCalled();
+    // expect(actions.actionClick).toHaveBeenCalled()
+    wrapper.destroy()
   })
 
   it('在第一个 p 标签中渲染“state.inputValue”', () => {
@@ -75,5 +81,6 @@ describe('Actions.vue', () => {
       console.log('p - value: ', p.text(), state.clicks.toString())
     })
     expect(p.text()).toBe(state.clicks.toString())
+    wrapper.destroy()
   })
 })
